@@ -16,7 +16,6 @@ import Typography from '@mui/material/Typography'
 const MenuDrawer = () => {
   let navigate = useNavigate()
 
-
   const menuItems = [
     {
       text: 'Profile',
@@ -47,7 +46,7 @@ const MenuDrawer = () => {
     variant="permanent" 
     anchor="left"
     >
-      <Typography variant="h5" align="center">
+      <Typography variant="h5" align="center" sx={{m: 2}}>
             Health App
       </Typography>
       <List>

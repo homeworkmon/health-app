@@ -11,7 +11,7 @@ const Profile = ({ pageStyle }) => {
   return (
     <div style={pageStyle} className='profile'>
       <PageHeader title={'Profile'} subtitle={'Your Health Profile'} icon={<HealthAndSafetyIcon/>}/>
-      <Paper sx={{m: 5, spacing: 3}}>
+      <Paper sx={{m: 2}}>
         <ProfileForm />
       </Paper>
     </div>
