@@ -1,8 +1,10 @@
 import React from 'react'
-import '@fontsource/roboto/400.css'
-import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety'
+// components
 import PageHeader from '../components/pageHeader'
 import ProfileForm from '../components/profileForm'
+// mui imports
+import '@fontsource/roboto/400.css'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Paper from '@mui/material/Paper'
 
 
@@ -10,8 +12,8 @@ const Profile = ({ pageStyle }) => {
 
   return (
     <div style={pageStyle} className='profile'>
-      <PageHeader title={'Profile'} subtitle={'Your Health Profile'} icon={<HealthAndSafetyIcon/>}/>
-      <Paper sx={{m: 2}}>
+      <PageHeader title={'Profile'} subtitle={'My Health Profile'} icon={<AccountCircleIcon fontSize={'large'}/>}/>
+      <Paper sx={{display: 'flex', width: '80%', alignSelf: 'center', justifyContent: 'center', pt: 1, m: 0}}>
         <ProfileForm />
       </Paper>
     </div>

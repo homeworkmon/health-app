@@ -1,28 +1,17 @@
 const { UserInputError, AuthenticationError } = require('apollo-server')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const Profile = require('./models/profile')
 const Appointment = require('./models/appointment')
 const User = require('./models/user')
 
 const resolvers = {
   User: {
-    profile: async (root) => {
-      const profile = await Profile.findOne({ user: root.id })
-      return profile
-    },
     appointments: async (root, args, context) => {
       const appointments = await Appointment.find({ user: context.currentUser })
       return appointments
     }
   },
   Appointment: {
-    user: async (root) => {
-      const user = await User.findOne({ id: root.user.id })
-      return user
-    }
-  },
-  Profile: {
     user: async (root) => {
       const user = await User.findOne({ id: root.user.id })
       return user
@@ -37,7 +26,7 @@ const resolvers = {
     singleAppt: async (root, args) => {
       return await Appointment.findById(args.id)
     },
-    profile: async (roots, args) => await Profile.findById(args.id)
+    getProfile: async (roots, args, context) => await User.findById(context.currentUser.id)
   },
   Mutation: {
     createUser: async (root, args) => {
@@ -119,54 +108,31 @@ const resolvers = {
       if (!context.currentUser) {
         throw new AuthenticationError('not authenticated')
       }
-      let profile = await Profile.findById(args.id)
+      const newProfile = {
+        name: args.name,
+        dob: args.dob,
+        healthcard: args.healthcard,
+        street: args.street,
+        city: args.city,
+        postalCode: args.postalCode,
+        gender: args.gender,
+        maritalStatus: args.maritalStatus,
+        phone: args.phone,
+        contactByPhone: args.contactByPhone,
+        emergencyContact: args.emergencyContact,
+        emergencyPhone: args.emergencyPhone,
+        allergies: args.allergies,
+        allergyDetails: args.allergyDetails,
+        medications: args.medications,
+        medicationDetails: args.medicationDetails
+      }
       try {
-        if (profile) {
-          profile = await Profile.findOneAndUpdate(
-            { id: args.id },
-            {
-              name: args.name,
-              dob: args.dob,
-              healthcard: args.healthcard,
-              street: args.street,
-              city: args.city,
-              postalCode: args.postalCode,
-              gender: args.gender,
-              maritalStatus: args.maritalStatus,
-              phone: args.phone,
-              contactByPhone: args.contactByPhone,
-              emergencyContact: args.emergencyContact,
-              allergies: args.allergies,
-              allergyDetails: args.allergyDetails,
-              medications: args.medications,
-              medicationDetails: args.medicationDetails,
-              user: context.currentUser
-            },
-            { new: true }
-          )
-        } else {
-          profile = new Profile ({
-            name: args.name,
-            dob: args.dob,
-            healthcard: args.healthcard,
-            street: args.street,
-            city: args.city,
-            postalCode: args.postalCode,
-            gender: args.gender,
-            maritalStatus: args.maritalStatus,
-            phone: args.phone,
-            contactByPhone: args.contactByPhone,
-            emergencyContact: args.emergencyContact,
-            allergies: args.allergies,
-            allergyDetails: args.allergyDetails,
-            medications: args.medications,
-            medicationDetails: args.medicationDetails,
-            user: context.currentUser
-          })
-          profile.save()
-        }
-        console.log(profile.user)
-        return profile
+        user = await User.findOneAndUpdate(
+          { id: context.currentUser.id },
+          { profile: newProfile },
+          { new: true }
+        )
+        return user
       } catch(error) {
         throw new UserInputError(error.message, {
           invalidArgs: args

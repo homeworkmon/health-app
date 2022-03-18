@@ -21,16 +21,16 @@ const typeDefs = gql`
         phone: String
         contactByPhone: Boolean
         emergencyContact: String!
+        emergencyPhone: String!
         allergies: Boolean
         allergyDetails: String
         medications: Boolean
         medicationDetails: String
-        user: User!
         id: ID!
     }
     type Appointment {
-        date: Float
-        time: Float
+        date: String!
+        time: String!
         provider: String
         user: User!
         id: ID!
@@ -40,7 +40,7 @@ const typeDefs = gql`
         allAppts: [Appointment]
         apptByUser: [Appointment]
         singleAppt(id: ID!): Appointment
-        profile(id: ID!): Profile
+        getProfile: User
     }
     type Token {
         value: String!
@@ -71,7 +71,7 @@ const typeDefs = gql`
         ): Boolean
         editProfile(
             name: String!
-            dob: Float!
+            dob: String!
             healthcard: String!
             street: String
             city: String
@@ -87,7 +87,7 @@ const typeDefs = gql`
             medications: Boolean
             medicationDetails: String
             id: ID
-        ): Profile
+        ): User
     }
 `
 module.exports = typeDefs

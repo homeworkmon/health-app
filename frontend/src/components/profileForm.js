@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import moment from 'moment'
+import { useMutation, useQuery } from '@apollo/client'
+import { UPDATE_PROFILE, GET_PROFILE } from '../queries'
 import Grid from '@mui/material/Grid'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
@@ -31,13 +34,23 @@ const initialFieldValues = {
 const maritalOptions = ['single', 'married', 'separated']
 
 const isToday = (date) => {
-  const today = new Date()
-  return date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
+  return moment(new Date()).isSame(date)
 }
 
 const ProfileForm = () => {
+  const result = useQuery(GET_PROFILE)
+  const [updateProfile] = useMutation(UPDATE_PROFILE, {
+    refetchQueries: [{ query: GET_PROFILE }]
+  })
+
+  useEffect(() => {
+    if (result.data) {
+      if (result.data.getProfile.profile) {
+        setValues(result.data.getProfile.profile)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result.data])
 
   const validate = (fieldValues = values) => {
     let temp = {...errors}
@@ -60,17 +73,22 @@ const ProfileForm = () => {
   }
 
   const {
-    values,
+    values, 
     setValues,
-    handleInputChange,
     errors,
-    setErrors
+    setErrors,
+    handleInputChange
   } = useForm(initialFieldValues, true, validate)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (validate()) {
-      window.alert('testing')
+      updateProfile({
+        variables: {
+          ...values
+        }
+      })
+      resetForm()
     }
   }
 
@@ -80,7 +98,7 @@ const ProfileForm = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} style={{width:'75%'}}>
       <Grid container sx={{'& .MuiFormControl-root': { width: '70%', m: 1}}}>
         <Grid item xs={6} align="center">
           <Input 
@@ -202,17 +220,19 @@ const ProfileForm = () => {
             onChange={handleInputChange}
           />
         </Grid>
-        <div>
-          <CustomButton
-            text='submit'
-            type='submit'
-          />
+        <Grid item xs={6}>
+        </Grid>
+        <Grid item xs={6} display='flex' justifyContent='space-evenly'>
           <CustomButton
             text='reset'
             onClick={resetForm}
             color='secondary'
           />
-        </div>
+          <CustomButton
+            text='submit'
+            type='submit'
+          />
+        </Grid>
       </Grid>
     </Form>
   )

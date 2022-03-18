@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const profileSchema = require('./profile')
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -17,10 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  profile: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Profile'
-  },
+  profile: profileSchema,
   appointments: [
     {
       type: mongoose.Schema.Types.ObjectId,

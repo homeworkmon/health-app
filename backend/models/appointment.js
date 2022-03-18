@@ -3,10 +3,10 @@ const uniqueValidator = require('mongoose-unique-validator')
 
 const appointmentSchema = new mongoose.Schema({
   date: {
-    type: Number
+    type: String
   },
   time: {
-    type: Number,
+    type: String,
   },
   provider: {
     type: String

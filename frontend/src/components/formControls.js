@@ -16,7 +16,7 @@ export const Input = ({ name, label, value, onChange, required, error=null }) =>
   return (
     <div>
       <TextField 
-        variant="outlined"
+        variant="filled"
         label={label}
         name={name}
         value={value}
@@ -31,7 +31,7 @@ export const Input = ({ name, label, value, onChange, required, error=null }) =>
 export const CustomSelect = ({ name, label, value, onChange, options, error=null }) => {
   return (
     <FormControl
-      variant="outlined"
+      variant="filled"
       {...(error && { error:true, helperText:error})}>
       <InputLabel>{label}</InputLabel>
       <Select
@@ -109,6 +109,24 @@ export const CustomButton = ({ text, size, color, variant, onClick, ...other}) =
       onClick={onClick}
       {...other}>
       {text}
+    </Button>
+  )
+}
+
+export const ActionButton = ({color, children, onClick}) => {
+
+  return (
+    <Button
+      onClick={onClick}
+      color={color || 'secondary'}
+      size='medium'
+      sx={{
+        minWidth: 0,
+        alignSelf: 'flex-start',
+        justifySelf: 'flex-start'
+      }}
+    >
+      {children}
     </Button>
   )
 }
