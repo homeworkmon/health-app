@@ -12,7 +12,7 @@ import DatePicker from '@mui/lab/DatePicker'
 import Button from '@mui/material/Button'
 import FormHelperText from '@mui/material/FormHelperText'
 
-export const Input = ({ name, label, value, onChange, required, error=null }) => {
+export const Input = ({ name, label, value, onChange, required, error=null, ...other }) => {
   return (
     <div>
       <TextField 
@@ -22,6 +22,7 @@ export const Input = ({ name, label, value, onChange, required, error=null }) =>
         value={value}
         onChange={onChange}
         required={required ? true : false}
+        {...other}
         {...(error && { error:true, helperText:error})}
       />
     </div>
@@ -32,15 +33,15 @@ export const CustomSelect = ({ name, label, value, onChange, options, error=null
   return (
     <FormControl
       variant="filled"
-      {...(error && { error:true, helperText:error})}>
+      {...(error && { error:true, helpertext:error})}>
       <InputLabel>{label}</InputLabel>
       <Select
         label={label}
         name={name}
         value={value}
         onChange={onChange}
+        defaultValue=''
       > 
-        <MenuItem value=''>None</MenuItem>
         {
           options.map(
             item => (<MenuItem key={item} value={item}>{item}</MenuItem>)
@@ -98,7 +99,22 @@ export const CustomDatePickerYear = ({ name, label, value, onChange, error=null 
   )
 }
 
-export const CustomButton = ({ text, size, color, variant, onClick, ...other}) => {
+export const CustomButton = ({ text, size, color, variant, onClick, isSubmit=false, ...other}) => {
+
+  if (isSubmit) {
+    return (
+      <Button
+        sx={{m: 2, spacing: 0.5}}
+        variant={variant || 'contained'}
+        size={size || 'large'}
+        color={color || 'primary'}
+        onClick={onClick}
+        type='submit'
+        {...other}>
+        {text}
+      </Button>
+    )
+  }
 
   return (
     <Button

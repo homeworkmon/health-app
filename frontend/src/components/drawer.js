@@ -2,6 +2,7 @@ import React from 'react'
 import {
   useNavigate
 } from 'react-router-dom'
+import { useApolloClient } from '@apollo/client'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -13,14 +14,15 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import Typography from '@mui/material/Typography'
 
 
-const MenuDrawer = () => {
+const MenuDrawer = ({ setToken, mobileOpen, drawerWidth, ...other}) => {
+  const client = useApolloClient()
   let navigate = useNavigate()
 
   const menuItems = [
     {
       text: 'Profile',
       icon: <AccountCircleIcon />,
-      onClick: () => navigate('/profile')
+      onClick: () => navigate('/')
     },
     {
       text: 'Appointments',
@@ -30,21 +32,29 @@ const MenuDrawer = () => {
     {
       text: 'Logout',
       icon: <LogoutIcon />,
-      onClick: () => navigate('/')
+      onClick: () => handleLogout()
     }
   ]
+
+  const handleLogout = () => {
+    navigate('/')
+    setToken(null)
+    localStorage.clear()
+    client.resetStore()
+  }
 
   return (
     <Drawer sx={{
       width: 200,
       flexShrink: 0,
       '& .MuiDrawer-paper': {
-        width: 200,
+        width: drawerWidth,
         boxSizing: 'border-box',
-      },
+      }
     }}
-    variant="permanent" 
     anchor="left"
+    open={mobileOpen}
+    {...other}
     >
       <Typography variant="h5" align="center" sx={{m: 2}}>
             Health App

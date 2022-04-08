@@ -14,10 +14,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 5
   },
-  email: {
-    type: String,
-    required: true
-  },
   profile: profileSchema,
   appointments: [
     {

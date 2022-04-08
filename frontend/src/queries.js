@@ -8,6 +8,12 @@ export const LOGIN = gql`
   }
 `
 
+export const CREATE_ACCOUNT = gql`
+  mutation signUp($username: String!, $password: String!) {
+    createUser(username: $username, password: $password)
+  }
+`
+
 const PROFILE = gql`fragment Profile on User {
   profile {
     name
@@ -52,22 +58,36 @@ export const GET_PROFILE = gql`
   ${PROFILE}
 `
 
-export const GET_ALL_APPTS = gql`
-  query {
-    allAppts {
-        date, 
-        time
-      }
+export const BOOKED_APPTS = gql`
+query bookedAppt($provider: String!){
+  apptByProvider(provider: $provider) {
+      date, 
+      provider,
+      id
     }
-  `
+  }
+`
 
 export const GET_USER_APPTS = gql`
   query {
     apptByUser {
         date, 
-        time,
         provider,
         id
       }
     }
   `
+
+export const CREATE_APPT= gql`
+  mutation makeAppt($date: String!, $provider: String!) {
+    createAppt(date: $date, provider: $provider) {
+      id
+    }
+  }
+`
+
+export const DELETE_APPT = gql`
+  mutation removeAppt($id: ID!) {
+    deleteAppt(id: $id)
+  }
+`

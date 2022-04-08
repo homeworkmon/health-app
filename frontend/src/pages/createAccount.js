@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
-import { LOGIN } from '../queries'
+import { useNavigate } from 'react-router-dom'
+import { CREATE_ACCOUNT } from '../queries'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
 import { CustomButton, Input } from '../components/formControls'
 import { Form, useForm } from '../components/useForm'
 import Notification from '../components/Notification'
@@ -14,13 +13,13 @@ const initialFieldValues = {
   username: '',
   password: ''
 }
-
-const LoginForm = ({ setToken, pageStyle }) => {
+  
+const CreateAccount = ({ pageStyle }) => {
+  const navigate = useNavigate()
   const [message, setMessage] = useState('')
   const [display, setDisplay] = useState(false)
-  let navigate = useNavigate()
 
-  const [ login, result ] = useMutation(LOGIN , {
+  const [ signUp ] = useMutation(CREATE_ACCOUNT , {
     onError: (error) => {
       setMessage(error.graphQLErrors[0].message)
       setDisplay(true)
@@ -29,24 +28,18 @@ const LoginForm = ({ setToken, pageStyle }) => {
     } 
   })
 
-  useEffect(() => {
-    if (result.data) {
-      const token = result.data.login.value
-      setToken(token)
-      localStorage.setItem('user-token', token)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [result.data])
-
   const validate = (fieldValues = values) => {
     let temp = {...errors}
-    if (fieldValues.username === '') {
-      temp.username = 'Please enter a username'
+    if('username' in fieldValues) {
+      temp.username = fieldValues.username.length<3 ? 'Please make username longer than 3 characters': ''
     }
-    if (fieldValues.password === '') {
-      temp.password = 'Please enter a password'
+    if('password' in fieldValues) {
+      temp.password = fieldValues.password.length<3 ? 'Please make username longer than 3 characters': ''
     }
-    setErrors ({ ...temp })
+    setErrors({ ...temp })
+
+    if(fieldValues == values)
+      return Object.values(temp).every(x => x == '')
   }
 
   const {
@@ -55,20 +48,24 @@ const LoginForm = ({ setToken, pageStyle }) => {
     errors,
     setErrors,
     handleInputChange
-  } = useForm(initialFieldValues, false, validate)
-    
-  const submit = async (e) => {
+  } = useForm(initialFieldValues, true, validate)
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    await login({ variables: { ...values }})
-    setValues(initialFieldValues)
-    setErrors('')
+    await signUp({ variables: { ...values }})
+    setValues({})
+    setDisplay(true),
+    setMessage('Account created!')
+    setTimeout(
+      () => navigate('/'),
+      3000)
   }
-    
+
   return (
     <div style={{...pageStyle, alignItems: 'center'}}>
-      <Typography variant='h4' sx={{justifySelf: 'flex-start', mt: 3}}>My Health App</Typography>
+      <Typography variant='h4' sx={{justifySelf: 'flex-start', mt: 3}}>Create Account</Typography>
       <Form 
-        onSubmit={submit} 
+        onSubmit={handleSubmit} 
         style={{
           marginTop: '36px',
           width: '80%',
@@ -77,7 +74,7 @@ const LoginForm = ({ setToken, pageStyle }) => {
           alignItems: 'center',
           flexDirection: 'column'}}>
         <Box sx={{width: {xs: '100%', sm: '50%', lg: '25%'}}}>
-          <Notification message={message} display={display} severity='error' sx={{m: 2}}/>
+          <Notification message={message} display={display} severity='success' sx={{m: 2}}/>
           <Stack spacing={3} align="center" sx={{
             '& .MuiFormControl-root': {
               width: '90%'
@@ -88,6 +85,7 @@ const LoginForm = ({ setToken, pageStyle }) => {
               label='Username'
               value={values.username}
               onChange={handleInputChange}
+              error={errors.username}
             />
             <Input
               name='password'
@@ -95,13 +93,10 @@ const LoginForm = ({ setToken, pageStyle }) => {
               label='Password'
               value={values.password}
               onChange={handleInputChange}
+              error={errors.password}
             />
             <Box>
-              <CustomButton type='Sign In' text='submit'></CustomButton>
-            </Box>
-            <Divider sx={{ width: '70%', alignSelf: 'center'}}/>
-            <Box>
-              <CustomButton text='Sign Up' color='secondary' onClick={() => navigate('/signup')}></CustomButton>
+              <CustomButton text='Sign Up' color='primary' type="submit"></CustomButton>
             </Box>
           </Stack>
         </Box>
@@ -110,4 +105,4 @@ const LoginForm = ({ setToken, pageStyle }) => {
   )
 }
 
-export default LoginForm
+export default CreateAccount

@@ -8,7 +8,9 @@ const PageHeader = ({ title, subtitle, icon}) => {
 
   const divStyle = {
     padding: '16px',
-    display: 'flex'
+    display: 'flex',
+    marginTop: '5px',
+    alignItems: 'center'
   }
 
   const textDivStyle = {

@@ -10,7 +10,7 @@ const Popup = ({ openPopup, setOpenPopup, title, children}) => {
 
   return (
     <div>
-      <Dialog open={openPopup} maxWidth='md' 
+      <Dialog open={openPopup} maxWidth='sm' fullWidth= { true }
         sx={{
           '& .MuiPaper-root': {position: 'absolute', top: 1},
           '& .MuiTypography-root': {pt: 1, pb: 1}

@@ -1,36 +1,30 @@
 import React, { useState } from 'react'
 import { 
   Route,
-  Routes
+  Routes,
+  useLocation
 } from 'react-router-dom'
-
-// components
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
 import Appointments from './pages/appointments'
+import CreateAccount from './pages/createAccount'
 import Profile from './pages/profile'
 import Login from './pages/login'
 import MenuDrawer from './components/drawer'
-// mui
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { green } from '@mui/material/colors'
 
-const theme = createTheme({
-  palette: {
-    primary: green,
-    secondary: {
-      main: green[900],
-    },
-  },
-})
+const drawerWidth = '200px'
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('user-token'))
-  // const [login, setLogin] = useState(false)
+  const location = useLocation()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
-  /* const handleLogout = () => {
-    setToken(null)
-    localStorage.clear()
-    // setLogin(false)
-  } */
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen)
+    console.log(mobileOpen)
+  }
 
   const baseStyle = {
     display: 'flex',
@@ -45,22 +39,67 @@ const App = () => {
     width: '100%',
   }
 
-  if (!token) {
+  if (!token && location.pathname==='/signup') {
     return (
-      <Login setToken={setToken} />
+      <>
+        <CreateAccount pageStyle={pageStyle} />
+      </>
+    )
+  }
+
+  else if (!token && location.pathname==='/') {
+    return (
+      <>
+        <Login setToken={setToken} pageStyle={pageStyle}/>
+      </>
     )
   }
 
   return (
     <div className="base" style={baseStyle}>
-      <ThemeProvider theme={theme}>
-        <MenuDrawer /> 
-        <Routes>
-          <Route path="/profile" element={<Profile pageStyle={pageStyle} />} />
-          <Route path="/appointments" element={<Appointments pageStyle={pageStyle} />} />
-          <Route path="/" element={<Login setToken={setToken} pageStyle={pageStyle}/>} />
-        </Routes>
-      </ThemeProvider>
+      <Box
+        component='nav'
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }, display: {xs: 'none', sm:'block'} }}
+        aria-label='navigation menu'
+      >
+        <MenuDrawer setToken={setToken} variant='permanent' drawerWidth={drawerWidth}/>
+      </Box>
+
+      <Paper
+        elevation={12}
+        sx={{ 
+          position: 'absolute', 
+          zIndex: 1,
+          borderRadius: '50%',
+          bottom: '20px',
+          left: '20px'
+        }}
+      >
+        <IconButton
+          aria-label="open-drawer"
+          onClick={handleDrawerToggle}
+          color='primary'
+          size='large'
+        >
+          <MenuIcon />
+        </IconButton>
+      </Paper>
+
+      <MenuDrawer 
+        setToken={setToken} 
+        mobileOpen={mobileOpen} 
+        variant='temporary' 
+        drawerWidth={drawerWidth}
+        onClose={handleDrawerToggle}
+        sx={{
+          display: {xs: 'block', sm:'none'},
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+        }}/>
+
+      <Routes>
+        <Route path="/appointments" element={<Appointments pageStyle={pageStyle} />} />
+        <Route path="/" element={<Profile pageStyle={pageStyle} />} />
+      </Routes>
     </div>
   )
 }

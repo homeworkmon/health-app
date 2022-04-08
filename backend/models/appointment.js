@@ -5,9 +5,6 @@ const appointmentSchema = new mongoose.Schema({
   date: {
     type: String
   },
-  time: {
-    type: String,
-  },
   provider: {
     type: String
   },

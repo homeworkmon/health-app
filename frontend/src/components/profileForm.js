@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import moment from 'moment'
+import React, { useEffect, useState } from 'react'
+import { isSameDay } from 'date-fns'
 import { useMutation, useQuery } from '@apollo/client'
 import { UPDATE_PROFILE, GET_PROFILE } from '../queries'
 import Grid from '@mui/material/Grid'
@@ -9,6 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import RadioGroup from '@mui/material/RadioGroup'
 import Radio from '@mui/material/Radio'
 import { Form, useForm } from './useForm'
+import Notification from './Notification'
 import { Input, CustomSelect, CustomCheckbox, CustomDatePickerYear, CustomButton } from './formControls'
 
 const initialFieldValues = {
@@ -34,10 +35,11 @@ const initialFieldValues = {
 const maritalOptions = ['single', 'married', 'separated']
 
 const isToday = (date) => {
-  return moment(new Date()).isSame(date)
+  return isSameDay(new Date(), new Date(date))
 }
 
 const ProfileForm = () => {
+  const [display, setDisplay] = useState(false)
   const result = useQuery(GET_PROFILE)
   const [updateProfile] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: GET_PROFILE }]
@@ -88,7 +90,8 @@ const ProfileForm = () => {
           ...values
         }
       })
-      resetForm()
+      setDisplay(true)
+      setTimeout(() => setDisplay(false), 4000)
     }
   }
 
@@ -98,9 +101,10 @@ const ProfileForm = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit} style={{width:'75%'}}>
+    <Form onSubmit={handleSubmit}>
+      <Notification message={'Information updated'} severity={'success'} display={display}/>
       <Grid container sx={{'& .MuiFormControl-root': { width: '70%', m: 1}}}>
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} md={6} align="center">
           <Input 
             label='Name'
             name='name'
@@ -165,7 +169,8 @@ const ProfileForm = () => {
             options={maritalOptions}
           />
         </Grid>
-        <Grid item xs={6} align="center">
+        <Grid item ></Grid>
+        <Grid item xs={12} md={6} align="center">
           <Input
             label="Phone Number"
             name="phone"
@@ -220,9 +225,8 @@ const ProfileForm = () => {
             onChange={handleInputChange}
           />
         </Grid>
-        <Grid item xs={6}>
-        </Grid>
-        <Grid item xs={6} display='flex' justifyContent='space-evenly'>
+        <Grid item md={6} sx={{ display: {xs: 'none', md:'block'} }}></Grid>
+        <Grid item xs={12} md={6} display='flex' justifyContent='space-evenly'>
           <CustomButton
             text='reset'
             onClick={resetForm}

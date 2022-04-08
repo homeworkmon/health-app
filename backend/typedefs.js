@@ -4,7 +4,6 @@ const typeDefs = gql`
     type User {
         username: String!
         password: String!
-        email: String!
         id: ID!
         profile: Profile
         appointments: [Appointment]
@@ -30,14 +29,13 @@ const typeDefs = gql`
     }
     type Appointment {
         date: String!
-        time: String!
         provider: String
         user: User!
         id: ID!
     }
     type Query {
         me: User
-        allAppts: [Appointment]
+        apptByProvider(provider: String!): [Appointment]
         apptByUser: [Appointment]
         singleAppt(id: ID!): Appointment
         getProfile: User
@@ -48,21 +46,18 @@ const typeDefs = gql`
     type Mutation {
         createUser(
             username: String!
-            email: String!
             password: String!
-        ): User
+        ): Boolean
         login(
             username: String!
             password: String!
         ): Token
         createAppt(
-            date: Float!
-            time: Float!
-            provider: String
+            date: String!
+            provider: String!
         ): Appointment
         editAppt(
-            date: Float!
-            time: Float!
+            date: String!
             provider: String
             id: ID!
         ): Appointment

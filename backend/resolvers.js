@@ -1,6 +1,7 @@
 const { UserInputError, AuthenticationError } = require('apollo-server')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const { isBefore } = require('date-fns')
 const Appointment = require('./models/appointment')
 const User = require('./models/user')
 
@@ -21,8 +22,14 @@ const resolvers = {
     me: (root, args, context) => {
       return context.currentUser
     },
-    allAppts: async () => await Appointment.find({}),
-    apptByUser: async (root, args, context) => await Appointment.find({ user: context.currentUser }),
+    apptByProvider: async (root, args) => {
+      const appts = await Appointment.find({ provider: args.provider })
+      return appts.filter(a => isBefore(new Date(a.date), new Date())===false)
+    },
+    apptByUser: async (root, args, context) => {
+      const appts = await Appointment.find({ user: context.currentUser })
+      return appts.filter(a => isBefore(new Date(a.date), new Date())===false)
+    },
     singleAppt: async (root, args) => {
       return await Appointment.findById(args.id)
     },
@@ -32,16 +39,19 @@ const resolvers = {
     createUser: async (root, args) => {
       const saltRounds = 10
       const passwordHash = await bcrypt.hash(args.password, saltRounds)
-      const user = new User({ username: args.username, password: passwordHash, email: args.email, profile: null, appointments: [] })
-      return user.save()
-        .catch(error => {
-          throw new UserInputError(error.message, {
-            invalidArgs: args
-          })
+      try {
+        const user = new User({ username: args.username, password: passwordHash, profile: null, appointments: [] })
+        await user.save()
+        return true
+      } catch(error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args
         })
+      }
     },
     login: async (root, args) => {
       const user = await User.findOne({ username: args.username })
+      console.log(user)
       const passwordCorrect = user === null
         ? false
         : await bcrypt.compare(args.password, user.password)
@@ -62,7 +72,7 @@ const resolvers = {
         throw new AuthenticationError('not authenticated')
       }
       try {
-        const appointment = new Appointment({ date: args.date, time: args.time, provider: args.provider, user: context.currentUser })
+        const appointment = new Appointment({ date: args.date, provider: args.provider, user: context.currentUser })
         appointment.save()
         return appointment
       } catch(error) {
@@ -80,7 +90,6 @@ const resolvers = {
           { id: args.appointmentId },
           {
             date: args.date,
-            time: args.time,
             provider: args.provider
           },
           { new: true })
@@ -97,7 +106,7 @@ const resolvers = {
       }
       try {
         await Appointment.findByIdAndDelete(args.id)
-        return // decided to leave this return type as Boolean bc of laziness!
+        return true
       } catch(error) {
         throw new UserInputError(error.message, {
           invalidArgs: args
