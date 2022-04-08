@@ -51,7 +51,6 @@ const resolvers = {
     },
     login: async (root, args) => {
       const user = await User.findOne({ username: args.username })
-      console.log(user)
       const passwordCorrect = user === null
         ? false
         : await bcrypt.compare(args.password, user.password)
