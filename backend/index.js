@@ -16,6 +16,7 @@ console.log('connecting to', process.env.MONGODB_URI)
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('connected to MongoDB')
+    startApolloServer()
   })
   .catch((error) => {
     console.log('error connection to MongoDB:', error.message)
@@ -58,5 +59,3 @@ const startApolloServer = async () => {
   await new Promise(resolve => httpServer.listen({ port: process.env.PORT }, resolve))
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
 }
-
-startApolloServer()
