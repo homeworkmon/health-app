@@ -32,14 +32,6 @@ const Appointments = ({ pageStyle }) => {
   })
   const [openPopup, setOpenPopup] = useState(false)
 
-  const {
-    setRecords,
-    TblContainer,
-    TblHead,
-    TblPagination,
-    recordsAfterPagingAndSorting
-  } = useTable(headCells)
-
   useEffect(() => {
     if (result.data) {
       if (result.data.apptByUser) {
@@ -49,6 +41,15 @@ const Appointments = ({ pageStyle }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result.data])
 
+  const {
+    setRecords,
+    TblContainer,
+    TblHead,
+    TblPagination,
+    recordsAfterPagingAndSorting
+  } = useTable(headCells)
+
+
   const removeAppt = (id) => {
     deleteAppt({ variables: { id: id }})
     setDisplay(true)
@@ -57,53 +58,55 @@ const Appointments = ({ pageStyle }) => {
 
   if (result.loading)
     return <div>loading</div>
-    
+  
+  else {
 
-  return (
-    <div style={pageStyle}>
-      <PageHeader title={'Appointments'} subtitle={'My Appointments'} icon={<CalendarMonthIcon fontSize={'large'}/>}/>
-      <Paper sx={{
-        display: 'flex',
-        width: {ml: '80%', xs: '100%'}, 
-        height: 'auto', 
-        flexDirection: 'column', 
-        alignSelf: 'center', 
-        justifyContent: 'space-between', 
-        pt: 1, 
-        m: 0}}>
-        <Box sx={{m: 3, justifySelf: 'flex-start'}}>
-          <Notification message={'Appointment deleted'} severity={'success'} display={display}/>
-          <TblContainer>
-            <TblHead />
-            <TableBody>
-              {recordsAfterPagingAndSorting().map(item => 
-                (<TableRow key={item.id}>
-                  <TableCell>{format(new Date(item.date), 'MMMM d Y')}</TableCell>
-                  <TableCell>{format(new Date(item.date), 'h:mm a')}</TableCell>
-                  <TableCell>{item.provider} </TableCell>
-                  <TableCell><IconButton onClick={() => removeAppt(item.id)}><DeleteIcon /></IconButton></TableCell>
-                </TableRow>)
-              )} 
-            </TableBody>
-          </TblContainer>
-          <TblPagination />
-        </Box>
-        <Box sx={{m: 2, alignSelf: 'flex-end'}}>
-          <CustomButton 
-            color={'secondary'}
-            text={'+ Create Appointment'}
-            onClick={() => setOpenPopup(true)}>
-          </CustomButton>
-        </Box>
-      </Paper>
-      <Popup 
-        setOpenPopup={setOpenPopup}
-        openPopup={openPopup}
-        title='Create Appointment'>
-        <CreateAppointment setOpenPopup={setOpenPopup}/>
-      </Popup>
-    </div>
-  )
+    return (
+      <div style={pageStyle}>
+        <PageHeader title={'Appointments'} subtitle={'My Appointments'} icon={<CalendarMonthIcon fontSize={'large'}/>}/>
+        <Paper sx={{
+          display: 'flex',
+          width: {ml: '80%', xs: '100%'}, 
+          height: 'auto', 
+          flexDirection: 'column', 
+          alignSelf: 'center', 
+          justifyContent: 'space-between', 
+          pt: 1, 
+          m: 0}}>
+          <Box sx={{m: 3, justifySelf: 'flex-start'}}>
+            <Notification message={'Appointment deleted'} severity={'success'} display={display}/>
+            <TblContainer>
+              <TblHead />
+              <TableBody>
+                {recordsAfterPagingAndSorting().map(item => 
+                  (<TableRow key={item.id}>
+                    <TableCell>{format(new Date(item.date), 'MMMM d Y')}</TableCell>
+                    <TableCell>{format(new Date(item.date), 'h:mm a')}</TableCell>
+                    <TableCell>{item.provider} </TableCell>
+                    <TableCell><IconButton onClick={() => removeAppt(item.id)}><DeleteIcon /></IconButton></TableCell>
+                  </TableRow>)
+                )} 
+              </TableBody>
+            </TblContainer>
+            <TblPagination />
+          </Box>
+          <Box sx={{m: 2, alignSelf: 'flex-end'}}>
+            <CustomButton 
+              color={'secondary'}
+              text={'+ Create Appointment'}
+              onClick={() => setOpenPopup(true)}>
+            </CustomButton>
+          </Box>
+        </Paper>
+        <Popup 
+          setOpenPopup={setOpenPopup}
+          openPopup={openPopup}
+          title='Create Appointment'>
+          <CreateAppointment setOpenPopup={setOpenPopup}/>
+        </Popup>
+      </div>
+    )
+  }
 }
 
 export default Appointments
