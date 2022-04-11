@@ -1,4 +1,4 @@
-const { UserInputError, AuthenticationError } = require('apollo-server-express')
+const { UserInputError, AuthenticationError } = require('apollo-server')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const { isBefore } = require('date-fns')
@@ -33,10 +33,7 @@ const resolvers = {
     singleAppt: async (root, args) => {
       return await Appointment.findById(args.id)
     },
-    getProfile: async (roots, args, context) => {
-      const user = await User.findById(context.currentUser.id)
-      return user
-    }
+    getProfile: async (roots, args, context) => await User.findById(context.currentUser.id)
   },
   Mutation: {
     createUser: async (root, args) => {
@@ -139,7 +136,7 @@ const resolvers = {
       }
       try {
         user = await User.findOneAndUpdate(
-          { _id: context.currentUser.id },
+          { id: context.currentUser.id },
           { profile: newProfile },
           { new: true }
         )

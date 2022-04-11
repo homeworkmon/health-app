@@ -8,6 +8,7 @@ import TablePagination from '@mui/material/TablePagination'
 
 const useTable = (headCells) => {
   const [records, setRecords] = useState([])
+
   const pages = [5, 10]
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(pages[page])
@@ -63,7 +64,6 @@ const useTable = (headCells) => {
   )
 
   const recordsAfterPagingAndSorting = () => {
-    console.log('executing records after paging and sorting')
     return records.slice(page*rowsPerPage,(page+1)*rowsPerPage)
   }
 
