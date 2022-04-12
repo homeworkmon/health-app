@@ -32,8 +32,6 @@ const Appointments = ({ pageStyle }) => {
   })
   const [openPopup, setOpenPopup] = useState(false)
 
-  console.log('component rendering')
-
   useEffect(() => {
     if (result.data) {
       if (result.data.apptByUser) {
