@@ -63,7 +63,6 @@ const useTable = (headCells) => {
   )
 
   const recordsAfterPagingAndSorting = () => {
-    console.log('executing records after paging and sorting')
     return records.slice(page*rowsPerPage,(page+1)*rowsPerPage)
   }
 
@@ -72,7 +71,8 @@ const useTable = (headCells) => {
     TblContainer,
     TblHead,
     TblPagination,
-    recordsAfterPagingAndSorting
+    recordsAfterPagingAndSorting,
+    records
   }
 
 }

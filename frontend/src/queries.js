@@ -50,7 +50,7 @@ export const UPDATE_PROFILE = gql`
 `
 
 export const GET_PROFILE = gql`
-  query {
+  query getProfile {
     getProfile {
       ...Profile
     }
@@ -69,7 +69,7 @@ query bookedAppt($provider: String!){
 `
 
 export const GET_USER_APPTS = gql`
-  query {
+  query getUserAppts {
     apptByUser {
         date, 
         provider,

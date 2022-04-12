@@ -32,6 +32,8 @@ const Appointments = ({ pageStyle }) => {
   })
   const [openPopup, setOpenPopup] = useState(false)
 
+  console.log('component rendering')
+
   useEffect(() => {
     if (result.data) {
       if (result.data.apptByUser) {
@@ -56,10 +58,9 @@ const Appointments = ({ pageStyle }) => {
     setTimeout(() => setDisplay(false), 4000)
   }
 
-  if (result.loading)
-    return <div>loading</div>
-  
-  else {
+  if (result.loading) {
+    return <div>loading...</div>
+  } else {
 
     return (
       <div style={pageStyle}>

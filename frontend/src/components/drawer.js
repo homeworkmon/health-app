@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-  useNavigate
-} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useApolloClient } from '@apollo/client'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
@@ -37,10 +35,10 @@ const MenuDrawer = ({ setToken, mobileOpen, drawerWidth, ...other}) => {
   ]
 
   const handleLogout = () => {
-    navigate('/')
     setToken(null)
     localStorage.clear()
-    client.resetStore()
+    client.clearStore()
+    navigate('/')
   }
 
   return (

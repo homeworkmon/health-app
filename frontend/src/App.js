@@ -23,7 +23,6 @@ const App = () => {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
-    console.log(mobileOpen)
   }
 
   const baseStyle = {
