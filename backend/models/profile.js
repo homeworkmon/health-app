@@ -10,8 +10,7 @@ const profileSchema = new mongoose.Schema({
   },
   healthcard: {
     type: String,
-    minlength: 12,
-    unique: true
+    minlength: 12
   },
   street: {
     type: String
