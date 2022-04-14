@@ -4,6 +4,7 @@
   
   <p>
     Sample fullstack project 'health-app' with user login, profile creation + appointment booking. 
+    <br>
     Built with React, Material UI, GraphQL, Apollo Server, Mongoose + MongoDB!
   </p>
   
