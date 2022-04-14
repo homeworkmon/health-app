@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
 
 const profileSchema = new mongoose.Schema({
   name: {
@@ -54,6 +53,5 @@ const profileSchema = new mongoose.Schema({
   }
 })
 
-profileSchema.plugin(uniqueValidator)
 // export Schema for subdocument not model!
 module.exports = profileSchema
