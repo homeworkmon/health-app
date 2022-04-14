@@ -13,9 +13,6 @@
   <a href="">
     <img src="https://img.shields.io/github/last-commit/homeworkmon/health-app" alt="last update" />
   </a>
-  <a href="https://github.com/homeworkmon/health-app/stargazers">
-    <img src="https://img.shields.io/github/stars/Louis3797/awesome-readme-template" alt="stars" />
-  </a>
 </p>
    
 <h3>
@@ -60,6 +57,12 @@
 
 <div align="center"> 
   <img src="https://github.com/homeworkmon/health-app/blob/main/assets/login.PNG/?raw=true" alt="screenshot-login" />
+</div>
+<div align="center"> 
+  <img src="https://github.com/homeworkmon/health-app/blob/main/assets/profile.PNG/?raw=true" alt="screenshot-login" />
+</div>
+<div align="center"> 
+  <img src="https://github.com/homeworkmon/health-app/blob/main/assets/appointments.PNG/?raw=true" alt="screenshot-login" />
 </div>
 
 
@@ -175,7 +178,7 @@ I decided on a fairly simple concept of an app that a health care provider could
 <!-- Contact -->
 ## :handshake: Contact
 
-Your Name - [Linked In](https://linkedin.com/in/monica-e-mason) - monica.emma.mason@gmail.com
+Monica M - [LinkedIn](https://linkedin.com/in/monica-e-mason) - monica.emma.mason@gmail.com
 
 Project Link: [https://github.com/homeworkmon/health-app](https://github.com/homeworkmon/health-app)
 
@@ -189,3 +192,4 @@ I learned and integrated skills from these resources for this project:
  - [@CodAffection React Material UI Table Paging, Sorting and Filtering](https://github.com/CodAffection/React-Material-UI-Table-Paging-Sorting-and-Filtering)
  - [CSS Tricks React-Based Multi-Step Forms](https://css-tricks.com/the-magic-of-react-based-multi-step-forms/)
  - [University of Helsinki's Full Stack Open 2021 curriculum](https://fullstackopen.com/en/#course-contents)
+ - [@Louis3797 awesome-readme-template](https://github.com/Louis3797/awesome-readme-template)
