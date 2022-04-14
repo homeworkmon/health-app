@@ -184,7 +184,7 @@ Project Link: [https://github.com/homeworkmon/health-app](https://github.com/hom
 
 
 <!-- Acknowledgments -->
-## :gem: Acknowledgements
+## :pray: Acknowledgements
 
 I learned and integrated skills from these resources for this project:
 
