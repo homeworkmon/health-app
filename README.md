@@ -148,7 +148,7 @@ Start the server in development mode
 <!-- Deployment -->
 ### :triangular_flag_on_post: Deployment
 
-Change frontend HttpLink URI in Index.js to absolute path
+Change frontend HttpLink URI in Index.js to relative path
 
 ```js script
   const httpLink = new HttpLink({ uri: '/graphql' })
