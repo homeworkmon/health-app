@@ -11,8 +11,8 @@ const Profile = ({ pageStyle }) => {
   return (
     <div style={pageStyle} className='profile'>
       <PageHeader title={'Profile'} subtitle={'My Health Profile'} icon={<AccountCircleIcon fontSize={'large'}/>}/>
-      <Paper sx={{display: 'flex', width: {md: '70%', xs: '100%'}, alignSelf: 'center', justifyContent: 'center', pt: 1, m: 0}}>
-        <Box sx={{ width: { xs: '100%', md: '100%', lg: '70%'}}}>
+      <Paper sx={{ display: 'flex', width: { md: '70%', xs: '100%' }, alignSelf: 'center', justifyContent: 'center', pt: 1, m: 0 }}>
+        <Box sx={{ width: { xs: '100%', md: '100%', lg: '70%' } }}>
           <ProfileForm />
         </Box>
       </Paper>

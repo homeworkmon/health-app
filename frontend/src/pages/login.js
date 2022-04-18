@@ -26,7 +26,7 @@ const LoginForm = ({ setToken, pageStyle }) => {
       setDisplay(true)
       setTimeout(() => setDisplay(false), 1500)
       setTimeout(() => setMessage(''), 1500)
-    } 
+    }
   })
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const LoginForm = ({ setToken, pageStyle }) => {
   }, [result.data])
 
   const validate = (fieldValues = values) => {
-    let temp = {...errors}
+    let temp = { ...errors }
     if (fieldValues.username === '') {
       temp.username = 'Please enter a username'
     }
@@ -50,48 +50,48 @@ const LoginForm = ({ setToken, pageStyle }) => {
   }
 
   const {
-    values, 
+    values,
     setValues,
     errors,
     setErrors,
     handleInputChange
   } = useForm(initialFieldValues, false, validate)
-    
+
   const submit = async (e) => {
     e.preventDefault()
-    await login({ variables: { ...values }})
+    await login({ variables: { ...values } })
     setValues(initialFieldValues)
     setErrors('')
   }
-    
+
   return (
-    <div style={{...pageStyle, alignItems: 'center'}}>
-      <Typography variant='h4' sx={{justifySelf: 'flex-start', mt: 3}}>My Health App</Typography>
-      <Form 
-        onSubmit={submit} 
+    <div style={{ ...pageStyle, alignItems: 'center' }}>
+      <Typography variant='h4' sx={{ justifySelf: 'flex-start', mt: 3 }}>My Health App</Typography>
+      <Form
+        onSubmit={submit}
         style={{
           marginTop: '36px',
           width: '80%',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          flexDirection: 'column'}}>
-        <Box sx={{width: {xs: '100%', sm: '50%', lg: '25%'}}}>
-          <Notification message={message} display={display} severity='error' sx={{m: 2}}/>
+          flexDirection: 'column' }}>
+        <Box sx={{ width: { xs: '100%', sm: '50%', lg: '25%' } }}>
+          <Notification message={message} display={display} severity='error' sx={{ m: 2 }}/>
           <Stack spacing={3} align="center" sx={{
             '& .MuiFormControl-root': {
               width: '90%'
             }
           }}>
             <Input
-              name='username' 
+              name='username'
               label='Username'
               value={values.username}
               onChange={handleInputChange}
             />
             <Input
               name='password'
-              type='password' 
+              type='password'
               label='Password'
               value={values.password}
               onChange={handleInputChange}
@@ -99,7 +99,7 @@ const LoginForm = ({ setToken, pageStyle }) => {
             <Box>
               <CustomButton type='Sign In' text='submit'></CustomButton>
             </Box>
-            <Divider sx={{ width: '70%', alignSelf: 'center'}}/>
+            <Divider sx={{ width: '70%', alignSelf: 'center' }}/>
             <Box>
               <CustomButton text='Sign Up' color='secondary' onClick={() => navigate('/signup')}></CustomButton>
             </Box>

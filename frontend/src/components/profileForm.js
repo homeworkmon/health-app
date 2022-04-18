@@ -55,7 +55,7 @@ const ProfileForm = () => {
   }, [result.data])
 
   const validate = (fieldValues = values) => {
-    let temp = {...errors}
+    let temp = { ...errors }
     if('dob' in fieldValues)
       temp.dob = isToday(fieldValues.dob) ? 'Date of Birth is required': ''
     if('phone' in fieldValues)
@@ -70,12 +70,12 @@ const ProfileForm = () => {
       ...temp
     })
 
-    if(fieldValues == values)
-      return Object.values(temp).every(x => x == '')
+    if(fieldValues === values)
+      return Object.values(temp).every(x => x === '')
   }
 
   const {
-    values, 
+    values,
     setValues,
     errors,
     setErrors,
@@ -103,9 +103,9 @@ const ProfileForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Notification message={'Information updated'} severity={'success'} display={display}/>
-      <Grid container sx={{'& .MuiFormControl-root': { width: '70%', m: 1}}}>
+      <Grid container sx={{ '& .MuiFormControl-root': { width: '70%', m: 1 } }}>
         <Grid item xs={12} md={6} align="center">
-          <Input 
+          <Input
             label='Name'
             name='name'
             value={values.name}
@@ -161,7 +161,7 @@ const ProfileForm = () => {
             required={true}
             error={errors.postalCode}
           />
-          <CustomSelect 
+          <CustomSelect
             name="maritalStatus"
             label="Marital Status"
             value={values.maritalStatus}
@@ -179,7 +179,7 @@ const ProfileForm = () => {
             required={true}
             error={errors.phone}
           />
-          <CustomCheckbox 
+          <CustomCheckbox
             name="contactByPhone"
             label="Contact By Phone?"
             value={values.contactByPhone}
@@ -200,7 +200,7 @@ const ProfileForm = () => {
             required={true}
             error={errors.emergencyPhone}
           />
-          <CustomCheckbox 
+          <CustomCheckbox
             name="allergies"
             label="Allergies?"
             value={values.allergies}
@@ -212,7 +212,7 @@ const ProfileForm = () => {
             value={values.allergyDetails}
             onChange={handleInputChange}
           />
-          <CustomCheckbox 
+          <CustomCheckbox
             name="medications"
             label="Medications?"
             value={values.medications}
@@ -225,7 +225,7 @@ const ProfileForm = () => {
             onChange={handleInputChange}
           />
         </Grid>
-        <Grid item md={6} sx={{ display: {xs: 'none', md:'block'} }}></Grid>
+        <Grid item md={6} sx={{ display: { xs: 'none', md:'block' } }}></Grid>
         <Grid item xs={12} md={6} display='flex' justifyContent='space-evenly'>
           <CustomButton
             text='reset'

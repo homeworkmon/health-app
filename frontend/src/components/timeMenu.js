@@ -8,7 +8,7 @@ const TimeMenu = ({ handleChange, step, values, error, available }) => {
   if (step !== 2) {
     return null
   }
-  
+
   const options = available.find(d => d.date === values.date).times
 
   return (
@@ -17,10 +17,10 @@ const TimeMenu = ({ handleChange, step, values, error, available }) => {
         width: '100%'
       }
     }}>
-      <CustomSelect 
+      <CustomSelect
         name={'time'}
         label={'Time'}
-        value={values.time} 
+        value={values.time}
         onChange={handleChange}
         options={options.map(t => format(t, 'h:mm a'))}
         error={error}>

@@ -15,10 +15,10 @@ const DateMenu = ({ handleChange, step, values, error, available }) => {
         width: '100%'
       }
     }}>
-      <CustomSelect 
+      <CustomSelect
         name={'date'}
         label={'Date'}
-        value={values.date} 
+        value={values.date}
         onChange={handleChange}
         options={available.map(i => i.date)}
         error={error}>

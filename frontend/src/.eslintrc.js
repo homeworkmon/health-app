@@ -1,20 +1,17 @@
 module.exports = {
   'env': {
     'browser': true,
-    'node': true,
     'es2021': true
   },
   'extends': [
     'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended'
+    'plugin:react/recommended'
   ],
   'parserOptions': {
     'ecmaFeatures': {
       'jsx': true
     },
-    'ecmaVersion': 'latest',
-    'sourceType': 'module'
+    'ecmaVersion': 'latest'
   },
   'plugins': [
     'react'
@@ -36,7 +33,14 @@ module.exports = {
       'error',
       'never'
     ],
-    'react/prop-types': 0,
-    'react-hooks/rules-of-hooks': 'error',
+    'eqeqeq': 'error',
+    'no-trailing-spaces': 'error',
+    'object-curly-spacing': [
+      'error', 'always'
+    ],
+    'arrow-spacing': [
+      'error', { 'before': true, 'after': true }
+    ],
+    'react/prop-types': 0
   }
 }
