@@ -12,7 +12,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import Typography from '@mui/material/Typography'
 
 
-const MenuDrawer = ({ setToken, mobileOpen, drawerWidth, ...other }) => {
+const MenuDrawer = ({ setToken, mobileOpen, drawerWidth, ...other}) => {
   const client = useApolloClient()
   let navigate = useNavigate()
 
@@ -54,7 +54,7 @@ const MenuDrawer = ({ setToken, mobileOpen, drawerWidth, ...other }) => {
     open={mobileOpen}
     {...other}
     >
-      <Typography variant="h5" align="center" sx={{ m: 2 }}>
+      <Typography variant="h5" align="center" sx={{m: 2}}>
             Health App
       </Typography>
       <List>

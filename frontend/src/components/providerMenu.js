@@ -25,10 +25,10 @@ const ProviderMenu = ({ handleChange, step, values, error, query }) => {
         width: '100%'
       }
     }}>
-      <CustomSelect
+      <CustomSelect 
         name={'provider'}
         label={'Provider'}
-        value={values.provider}
+        value={values.provider} 
         onChange={handleSelect}
         options={providers}
         error={error}>

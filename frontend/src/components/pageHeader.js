@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 
-const PageHeader = ({ title, subtitle, icon }) => {
+const PageHeader = ({ title, subtitle, icon}) => {
 
   const divStyle = {
     padding: '16px',

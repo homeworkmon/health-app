@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react' 
 import { format, isEqual, addBusinessDays, addMinutes, setMilliseconds } from 'date-fns'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { BOOKED_APPTS, CREATE_APPT, GET_USER_APPTS } from '../queries'
@@ -36,7 +36,7 @@ const generateDay = (prev, booked) => {
   const bookedDates = booked.map(appt => new Date(appt.date))
   const result = times.filter(t => bookedDates.some(b => isEqual(b, t))===false)
   if (result.length > 1) {
-    return { date: format(day, 'cccc d MMMM yyyy'), times: result }
+    return {date: format(day, 'cccc d MMMM yyyy'), times: result}
   }
   return false
 }
@@ -66,21 +66,21 @@ const CreateAppointment = ({ setOpenPopup }) => {
 
     if (step === 0) {
       if( values.provider === '' ||  values.provider === 'None') {
-        setErrors({ provider: 'Please select an option' })
+        setErrors({provider: 'Please select an option'})
         return true
-      }
+      } 
       return false
     }
     else if (step === 1) {
       if ( values.date === '' ||  values.date === 'None' ) {
-        setErrors({ date: 'Please select an option' })
+        setErrors({date: 'Please select an option'})
         return true
-      }
+      } 
       return false
     }
     else if (step === 2) {
       if ( values.time === '' ||  values.time === 'None' ) {
-        setErrors({ time: 'Please select an option' })
+        setErrors({time: 'Please select an option'})
         return true
       }
       return false
@@ -93,11 +93,11 @@ const CreateAppointment = ({ setOpenPopup }) => {
     e.preventDefault()
     setValues(initialFieldValues)
     setErrors({})
-    createAppt({ variables: { provider: values.provider, date: format(new Date(values.date + ' ' + values.time), 'yyyy-MM-dd HH:mm') } })
+    createAppt({ variables: { provider: values.provider, date: format(new Date(values.date + ' ' + values.time), 'yyyy-MM-dd HH:mm') }})
   }
 
   const {
-    values,
+    values, 
     setValues,
     errors,
     setErrors,
@@ -105,7 +105,7 @@ const CreateAppointment = ({ setOpenPopup }) => {
   } = useForm(initialFieldValues, false, validate)
 
   const queryProvider = (provider) => {
-    apptsByProvider({ variables: { provider: provider } })
+    apptsByProvider({ variables: { provider: provider }})
   }
 
   useEffect(() => {
@@ -113,9 +113,9 @@ const CreateAppointment = ({ setOpenPopup }) => {
       setAvailable(generateAvailability(result.data.apptByProvider))
     }
   }, [result.data])
-
+    
   return (
-    <Form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+    <Form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column'}}>
       <Box>
         <ProviderMenu handleChange={handleInputChange} step={step} values={values} error={errors.provider} query={queryProvider}/>
         <DateMenu handleChange={handleInputChange} step={step} values={values} error={errors.date} available={available} />
@@ -125,7 +125,7 @@ const CreateAppointment = ({ setOpenPopup }) => {
         text={ step === 2 ? 'submit' : 'next'}
         onClick={() => validate(step) ? null : setStep(step+1)}
         isSubmit={step > 2 ? true : false}
-        sx={{ alignSelf: 'flex-end', mt: 2 }}>
+        sx={{alignSelf: 'flex-end', mt: 2}}>
       </CustomButton>
     </Form>
   )

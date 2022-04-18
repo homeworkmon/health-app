@@ -11,12 +11,12 @@ export const useForm = (initialFieldValues, validateOnChange=false, validate) =>
       ...values,
       [name]: value
     })
-    if(validateOnChange)
-      validate({ [name]:value })
+    if(validateOnChange) 
+      validate({[name]:value})
   }
-
+    
   return {
-    values,
+    values, 
     setValues,
     errors,
     setErrors,

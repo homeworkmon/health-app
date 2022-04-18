@@ -47,7 +47,6 @@ const resolvers = {
         await user.save()
         return true
       } catch(error) {
-        console.log(error)
         throw new UserInputError(error.message, {
           invalidArgs: args
         })

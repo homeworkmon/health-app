@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router} from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import App from './App'
 import '@fontsource/roboto/400.css'
@@ -29,7 +29,7 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
-const httpLink = new HttpLink({ uri: 'http://localhost:4000/graphql' })
+const httpLink = new HttpLink({ uri: '/graphql' })
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),

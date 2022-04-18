@@ -15,7 +15,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 export const Input = ({ name, label, value, onChange, required, error=null, ...other }) => {
   return (
     <div>
-      <TextField
+      <TextField 
         variant="filled"
         label={label}
         name={name}
@@ -23,7 +23,7 @@ export const Input = ({ name, label, value, onChange, required, error=null, ...o
         onChange={onChange}
         required={required ? true : false}
         {...other}
-        {...(error && { error:true, helperText:error })}
+        {...(error && { error:true, helperText:error})}
       />
     </div>
   )
@@ -33,7 +33,7 @@ export const CustomSelect = ({ name, label, value, onChange, options, error=null
   return (
     <FormControl
       variant="filled"
-      {...(error && { error:true, helpertext:error })}>
+      {...(error && { error:true, helpertext:error})}>
       <InputLabel>{label}</InputLabel>
       <Select
         label={label}
@@ -41,7 +41,7 @@ export const CustomSelect = ({ name, label, value, onChange, options, error=null
         value={value}
         onChange={onChange}
         defaultValue=''
-      >
+      > 
         {
           options.map(
             item => (<MenuItem key={item} value={item}>{item}</MenuItem>)
@@ -63,8 +63,8 @@ export const CustomCheckbox = ({ name, label, value, onChange, required }) => {
 
   return (
     <FormControl>
-      <FormControlLabel
-        control={<Checkbox
+      <FormControlLabel 
+        control={<Checkbox 
           name={name}
           color="primary"
           checked={value}
@@ -92,19 +92,19 @@ export const CustomDatePickerYear = ({ name, label, value, onChange, error=null 
         value={value}
         onChange={e => onChange(convertToDefEventPara(name, e))}
         renderInput={(props) => <TextField {...props}
-          {...(error && { error:true, helperText:error })}
+          {...(error && { error:true, helperText:error})}
         />}
       />
     </LocalizationProvider>
   )
 }
 
-export const CustomButton = ({ text, size, color, variant, onClick, isSubmit=false, ...other }) => {
+export const CustomButton = ({ text, size, color, variant, onClick, isSubmit=false, ...other}) => {
 
   if (isSubmit) {
     return (
       <Button
-        sx={{ m: 2, spacing: 0.5 }}
+        sx={{m: 2, spacing: 0.5}}
         variant={variant || 'contained'}
         size={size || 'large'}
         color={color || 'primary'}
@@ -118,7 +118,7 @@ export const CustomButton = ({ text, size, color, variant, onClick, isSubmit=fal
 
   return (
     <Button
-      sx={{ m: 2, spacing: 0.5 }}
+      sx={{m: 2, spacing: 0.5}}
       variant={variant || 'contained'}
       size={size || 'large'}
       color={color || 'primary'}
@@ -129,7 +129,7 @@ export const CustomButton = ({ text, size, color, variant, onClick, isSubmit=fal
   )
 }
 
-export const ActionButton = ({ color, children, onClick }) => {
+export const ActionButton = ({color, children, onClick}) => {
 
   return (
     <Button

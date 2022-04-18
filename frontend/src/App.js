@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {
+import { 
   Route,
   Routes,
   useLocation
@@ -58,7 +58,7 @@ const App = () => {
     <div className="base" style={baseStyle}>
       <Box
         component='nav'
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }, display: { xs: 'none', sm:'block' } }}
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }, display: {xs: 'none', sm:'block'} }}
         aria-label='navigation menu'
       >
         <MenuDrawer setToken={setToken} variant='permanent' drawerWidth={drawerWidth}/>
@@ -66,8 +66,8 @@ const App = () => {
 
       <Paper
         elevation={12}
-        sx={{
-          position: 'absolute',
+        sx={{ 
+          position: 'absolute', 
           zIndex: 1,
           borderRadius: '50%',
           bottom: '20px',
@@ -84,14 +84,14 @@ const App = () => {
         </IconButton>
       </Paper>
 
-      <MenuDrawer
-        setToken={setToken}
-        mobileOpen={mobileOpen}
-        variant='temporary'
+      <MenuDrawer 
+        setToken={setToken} 
+        mobileOpen={mobileOpen} 
+        variant='temporary' 
         drawerWidth={drawerWidth}
         onClose={handleDrawerToggle}
         sx={{
-          display: { xs: 'block', sm:'none' },
+          display: {xs: 'block', sm:'none'},
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
         }}/>
 
